@@ -1,72 +1,71 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Multiplication;  // Your DLL namespace
+using Subtraction;
+
+using System;
 using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Calculator
 {
     public partial class Form1 : Form
     {
+      
+        Class1 multiplier = new Class1();
+        Substractor subtractor = new Substractor();
+
+
         public Form1()
         {
             InitializeComponent();
+
+   
+            button1.Click += button1_Click;
+            button2.Click += button2_Click;
         }
 
+        
         private void button1_Click(object sender, EventArgs e)
         {
             double sum = 0;
+            if (double.TryParse(textBox1.Text, out double val)) sum += val;
+            if (double.TryParse(textBox2.Text, out val)) sum += val;
+            if (double.TryParse(textBox3.Text, out val)) sum += val;
+            if (double.TryParse(textBox4.Text, out val)) sum += val;
+            if (double.TryParse(textBox5.Text, out val)) sum += val;
+            if (double.TryParse(textBox6.Text, out val)) sum += val;
+            if (double.TryParse(textBox7.Text, out val)) sum += val;
+            if (double.TryParse(textBox8.Text, out val)) sum += val;
+            if (double.TryParse(textBox9.Text, out val)) sum += val;
 
-            if (textBox1.Text != "")
-                sum += Convert.ToDouble(textBox1.Text);
-            if (textBox2.Text != "")
-                sum += Convert.ToDouble(textBox2.Text);
-            if (textBox3.Text != "")
-                sum += Convert.ToDouble(textBox3.Text);
-            if (textBox4.Text != "")
-                sum += Convert.ToDouble(textBox4.Text);
-            if (textBox5.Text != "")
-                sum += Convert.ToDouble(textBox5.Text);
-            if (textBox6.Text != "")
-                sum += Convert.ToDouble(textBox6.Text);
-            if (textBox7.Text != "")
-                sum += Convert.ToDouble(textBox7.Text);
-            if (textBox8.Text != "")
-                sum += Convert.ToDouble(textBox8.Text);
-            if (textBox9.Text != "")
-                sum += Convert.ToDouble(textBox9.Text);
-          
+            if (sum == 0)
+                label2.Text = "Please enter at least one number.";
+            else
+                label2.Text = "Sum: " + sum.ToString();
+        }
 
-            if (textBox1.Text == "" && textBox2.Text == "" && textBox3.Text == "" && textBox4.Text == "" &&
-                textBox5.Text == "" && textBox6.Text == "" && textBox7.Text == "" && textBox8.Text == "" &&
-                textBox9.Text == "")
+        private void button2_Click(object sender, EventArgs e)
+        {
+            if (double.TryParse(textBox1.Text, out double num1) && double.TryParse(textBox2.Text, out double num2))
             {
-                label1.Text = "Please enter at least one number.";
+                double product = multiplier.Multiply(num1, num2);
+                label2.Text = "Product: " + product.ToString();
             }
             else
             {
-                label1.Text = "Sum: " + sum.ToString();
+                label2.Text = "Please enter valid numbers in TextBox1 and TextBox2.";
             }
         }
 
-        private void textBox1_TextChanged(object sender, EventArgs e)
+        private void button3_Click(object sender, EventArgs e)  
         {
-
-        }
-
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
+            if (double.TryParse(textBox1.Text, out double num1) && double.TryParse(textBox2.Text, out double num2))
+            {
+                double difference = subtractor.Subtract(num1, num2);
+                label2.Text = "Difference: " + difference.ToString();
+            }
+            else
+            {
+                label2.Text = "Enter valid numbers in TextBox1 and TextBox2.";
+            }
         }
     }
 }
