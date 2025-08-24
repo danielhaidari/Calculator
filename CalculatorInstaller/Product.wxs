@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+  <Product Id="*" Name="CalculatorInstaller" Language="1033" Version="1.0.0.0" Manufacturer="Yaser Haidari" UpgradeCode="179a63ea-e3f0-4f10-b0c6-c5160360ea96">
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <Feature Id="ProductFeature" Title="CalculatorInstaller" Level="1">
+      <ComponentGroupRef Id="ProductComponents" />
+    </Feature>
+  </Product>
+
+  
+  <Fragment>
+    <Directory Id="TARGETDIR" Name="SourceDir">
+      <Directory Id="ProgramFilesFolder">
+        <Directory Id="INSTALLFOLDER" Name="CalculatorInstaller" />
+      </Directory>
+      <Directory Id="ProgramMenuFolder">
+        <Directory Id="ApplicationProgramsFolder" Name="CalculatorInstaller" />
+      </Directory>
+    </Directory>
+  </Fragment>
+  
+  <Fragment>
+    <ComponentGroup Id="ProductComponents" Directory="INSTALLFOLDER">
+      <ComponentRef Id="Calculator.exe" />
+      <ComponentRef Id="ApplicationShortcut" />
+    </ComponentGroup>
+  </Fragment>
+
+  <Fragment>
+    <Component Id="Calculator.exe" Guid="5EA0A8FE-3363-4C6F-B844-B00CB2D6C488" Directory="INSTALLFOLDER">
+      <File Id="Calculator.exe" Name="Calculator.exe" Source="$(var.Calculator.TargetDir)Calculator.exe" />
+    </Component>
+  </Fragment>
+
+  
+  <Fragment>
+    <Component Id="ApplicationShortcut" Guid="D31B6385-596C-4D38-A5E2-A2C4A1D8D663" Directory="ApplicationProgramsFolder">
+      <Shortcut Id="startMenuShortcut" 
+                Name="Calculator" 
+                Description="Calculator Application" 
+                Target="[INSTALLFOLDER]Calculator.exe" 
+                WorkingDirectory="INSTALLFOLDER"/>
+      <RemoveFolder Id="ApplicationProgramsFolder" On="uninstall"/>
+      <RegistryValue Root="HKCU" Key="Software\CalculatorInstaller" Name="installed" Type="integer" Value="1" KeyPath="yes"/>
+    </Component>
+  </Fragment>
+</Wix>
