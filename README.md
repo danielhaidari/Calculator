@@ -1,3 +1,3 @@
-Assignment 2 - Software Deployment & Evolution
+Assignment 1 - Software Deployment & Evolution
 
 Calculator Application as Windows Installer 
